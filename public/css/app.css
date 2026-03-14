@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Section headings */
+  .section-label {
+    @apply text-xs font-bold tracking-[3px] uppercase text-green-accent mb-3;
+  }
+  .section-title {
+    @apply font-playfair font-bold text-green-deep mb-5;
+    font-size: clamp(28px, 4vw, 44px);
+  }
+  .section-title em {
+    @apply not-italic text-green-accent;
+  }
+  .section-lead {
+    @apply text-gray-500 text-lg max-w-xl;
+  }
+
+  /* Gallery */
+  .gallery-grid {
+    @apply grid gap-3;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @screen md {
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @screen sm {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .gallery-item {
+    @apply relative rounded-xl overflow-hidden cursor-pointer;
+    aspect-ratio: 1;
+  }
+  .gallery-item.wide {
+    grid-column: span 2;
+    aspect-ratio: 2 / 1;
+  }
+  .gallery-item img {
+    @apply w-full h-full object-cover transition-transform duration-400;
+  }
+  .gallery-item:hover img {
+    @apply scale-105;
+  }
+  .g-overlay {
+    @apply absolute inset-0 flex items-end p-3.5 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(to top, rgba(10,30,5,.7) 0%, transparent 55%);
+  }
+  .gallery-item:hover .g-overlay {
+    @apply opacity-100;
+  }
+  .g-overlay span {
+    @apply text-white text-sm font-semibold;
+  }
+
+  /* Tab buttons */
+  .tab-btn {
+    @apply px-5 py-2 rounded-full border-2 border-cream-dark bg-white text-gray-500
+           font-nunito text-sm font-semibold cursor-pointer transition-all duration-200;
+  }
+  .tab-btn:hover {
+    @apply border-green-accent text-green-accent;
+  }
+  .tab-btn.active {
+    @apply bg-green-mid border-green-mid text-white;
+  }
+
+  /* Hero buttons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gold text-white
+           font-semibold text-base hover:bg-gold-light hover:-translate-y-0.5
+           transition-all duration-250 shadow-lg no-underline;
+  }
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white
+           font-semibold text-base border-2 border-white/40 bg-white/10
+           hover:bg-white/20 hover:-translate-y-0.5 transition-all duration-250 no-underline;
+  }
+}
