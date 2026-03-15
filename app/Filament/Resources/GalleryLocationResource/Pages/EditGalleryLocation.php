@@ -1,33 +1,28 @@
 <?php
 
-namespace App\Filament\Resources\GalleryPhotoResource\Pages;
+namespace App\Filament\Resources\GalleryLocationResource\Pages;
 
-use App\Filament\Resources\GalleryPhotoResource;
+use App\Filament\Resources\GalleryLocationResource;
 use App\Models\City;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditGalleryPhoto extends EditRecord
+class EditGalleryLocation extends EditRecord
 {
-    protected static string $resource = GalleryPhotoResource::class;
+    protected static string $resource = GalleryLocationResource::class;
 
     protected function getHeaderActions(): array
     {
         return [DeleteAction::make()];
     }
 
-    // Восстановить state_code при открытии формы
+    // При открытии формы — восстановить state_code из города
     protected function mutateFormDataBeforeFill(array $data): array
     {
         if (!empty($data['city_id'])) {
             $city = City::find($data['city_id']);
-            $data['state_code'] = $city?->state_code ?? 'UN';
-        } else {
-            $data['state_code'] = 'UN';
+            $data['state_code'] = $city?->state_code;
         }
-
-        $data['gps_found']      = false;
-        $data['date_from_exif'] = false;
 
         return $data;
     }
@@ -45,7 +40,7 @@ class EditGalleryPhoto extends EditRecord
             $data['city_id'] = $city->id;
         }
 
-        unset($data['state_code'], $data['new_city_name'], $data['date_from_exif'], $data['gps_found']);
+        unset($data['state_code'], $data['new_city_name']);
 
         return $data;
     }

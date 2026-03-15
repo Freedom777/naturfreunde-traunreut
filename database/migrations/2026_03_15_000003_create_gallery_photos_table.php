@@ -11,11 +11,11 @@ return new class extends Migration
         Schema::create('gallery_photos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('gallery_location_id')->constrained()->cascadeOnDelete();
-            $table->string('path');                    // storage path
+            $table->foreignId('city_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('path');
             $table->string('caption')->nullable();
-            $table->string('taken_at_date')->nullable(); // "September 2024"
-            $table->boolean('featured')->default(false); // wide/hero photo
-            $table->integer('sort_order')->default(0);
+            $table->date('taken_at_date')->nullable();
+            $table->unsignedInteger('sort_order')->default(0);
             $table->boolean('published')->default(true);
             $table->timestamps();
         });

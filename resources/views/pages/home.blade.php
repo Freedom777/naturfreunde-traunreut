@@ -65,8 +65,91 @@
     </div>
   </section>
 
-  {{-- ── GALLERY ── --}}
-  <x-gallery-section :locations="$galleryLocations" />
+    {{-- ── GALLERY PREVIEW ── --}}
+    <section class="py-24 px-10 bg-cream" id="galerie">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="section-label">📸 Fotoalbum</div>
+            <h2 class="section-title">Galerie unserer <em>Wanderungen</em></h2>
+            <p class="section-lead">Eindrücke aus unseren Touren. Klicken Sie auf ein Album für mehr Fotos.</p>
+
+            @if($galleryLocations->isEmpty())
+                <p style="color:#666; margin-top:2rem;">Noch keine Alben vorhanden.</p>
+            @else
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:48px">
+                    @foreach($galleryLocations as $loc)
+                        <a href="{{ route('gallery') }}#album-{{ $loc->id }}"
+                           style="text-decoration:none; color:inherit; display:block;
+                    background:#fff; border-radius:16px; overflow:hidden;
+                    box-shadow:0 2px 12px rgba(0,0,0,.07);
+                    transition:transform .25s, box-shadow .25s"
+                           onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 32px rgba(0,0,0,.12)'"
+                           onmouseout="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,.07)'">
+
+                            {{-- Обложка --}}
+                            <div style="aspect-ratio:4/3; overflow:hidden; background:#e8e0d0">
+                                @if($loc->coverPhoto)
+                                    <img src="{{ Storage::url($loc->coverPhoto->path) }}"
+                                         alt="{{ $loc->name }}"
+                                         style="width:100%; height:100%; object-fit:cover; transition:transform .4s"
+                                         onmouseover="this.style.transform='scale(1.05)'"
+                                         onmouseout="this.style.transform=''">
+                                @elseif($loc->publishedPhotos->isNotEmpty())
+                                    <img src="{{ Storage::url($loc->publishedPhotos->first()->path) }}"
+                                         alt="{{ $loc->name }}"
+                                         style="width:100%; height:100%; object-fit:cover; transition:transform .4s"
+                                         onmouseover="this.style.transform='scale(1.05)'"
+                                         onmouseout="this.style.transform=''">
+                                @else
+                                    <div style="width:100%; height:100%; display:flex; align-items:center;
+                            justify-content:center; font-size:48px">
+                                        {{ $loc->city?->state?->emoji ?? '📍' }}
+                                    </div>
+                                @endif
+                            </div>
+
+                            {{-- Инфо --}}
+                            <div style="padding:18px 20px">
+                                <div style="font-family:'Playfair Display',serif; font-size:17px;
+                          font-weight:700; color:#1e3a0f; margin-bottom:8px;
+                          white-space:nowrap; overflow:hidden; text-overflow:ellipsis">
+                                    {{ $loc->name }}
+                                </div>
+                                <div style="display:flex; gap:12px; font-size:13px; color:#888; flex-wrap:wrap">
+                                    @if($loc->date)
+                                        <span>📅 {{ $loc->date->locale('de')->isoFormat('D. MMMM YYYY') }}</span>
+                                    @endif
+                                    @if($loc->city)
+                                        <span>
+                    {{ $loc->city?->state?->emoji ?? '📍' }}
+                                            {{ $loc->city->name }}
+                  </span>
+                                    @endif
+                                </div>
+                                <div style="margin-top:10px; font-size:12px; color:#4e8b2c; font-weight:600">
+                                    {{ $loc->publishedPhotos->count() }} Fotos →
+                                </div>
+                            </div>
+
+                        </a>
+                    @endforeach
+                </div>
+
+                <div style="text-align:center; margin-top:40px">
+                    <a href="{{ route('gallery') }}"
+                       style="display:inline-flex; align-items:center; gap:8px;
+                  padding:14px 28px; border-radius:10px; background:#2f5c1a;
+                  color:#fff; font-weight:600; font-size:15px; text-decoration:none;
+                  transition:all .2s"
+                       onmouseover="this.style.background='#4e8b2c'"
+                       onmouseout="this.style.background='#2f5c1a'">
+                        Alle Wanderungen ansehen →
+                    </a>
+                </div>
+            @endif
+
+        </div>
+    </section>
 
   {{-- ── ABOUT ── --}}
   <section class="py-24 px-10 bg-white" id="verein">

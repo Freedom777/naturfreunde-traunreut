@@ -3,25 +3,17 @@
 namespace Database\Seeders;
 
 use App\Models\Event;
-use App\Models\GalleryLocation;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // ── Gallery Locations ────────────────────────────────
-        $locations = [
-            ['name' => 'Seeon & Kloster',      'slug' => 'seeon',         'emoji' => '🏞️', 'sort_order' => 1],
-            ['name' => 'Chiemsee',              'slug' => 'chiemsee',      'emoji' => '🌊', 'sort_order' => 2],
-            ['name' => 'Kampenwand',            'slug' => 'kampenwand',    'emoji' => '⛰️', 'sort_order' => 3],
-            ['name' => 'Berchtesgaden',         'slug' => 'berchtesgaden', 'emoji' => '🏔️', 'sort_order' => 4],
-            ['name' => 'Chiemgauer Alpen',      'slug' => 'chiemgau',      'emoji' => '🌄', 'sort_order' => 5],
-        ];
-
-        foreach ($locations as $loc) {
-            GalleryLocation::firstOrCreate(['slug' => $loc['slug']], $loc);
-        }
+        // Сначала штаты, потом города (порядок важен из-за FK)
+        $this->call([
+            StateSeeder::class,
+            CitySeeder::class,
+        ]);
 
         // ── Sample Events ────────────────────────────────────
         $events = [

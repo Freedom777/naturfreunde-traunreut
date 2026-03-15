@@ -49,15 +49,16 @@
               $hasEvent  = $calendarEvents->has($day);
               $event     = $hasEvent ? $calendarEvents->get($day) : null;
             @endphp
-            <div
-              class="aspect-square flex items-center justify-center text-sm rounded-lg cursor-pointer
-                     relative transition-all duration-150
-                     {{ $isToday ? 'bg-green-mid text-white font-bold' : 'hover:bg-green-accent/10 hover:text-green-accent' }}"
-              @if($hasEvent) title="{{ $event->title }}" @endif
-            >
+                <div style="aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+            font-size:14px; border-radius:8px; cursor:pointer; position:relative;
+            transition:all .15s;
+            {{ $isToday ? 'background:#2f5c1a; color:#fff; font-weight:700;' : '' }}"
+                     @if(!$isToday) onmouseover="this.style.background='rgba(78,139,44,.12)'"
+                     onmouseout="this.style.background=''" @endif>
               {{ $day }}
               @if($hasEvent)
-                <span class="absolute bottom-1 w-1.5 h-1.5 rounded-full {{ $isToday ? 'bg-white' : 'bg-gold' }}"></span>
+                    <span style="position:absolute; bottom:4px; width:6px; height:6px; border-radius:50%;
+             background:{{ $isToday ? '#fff' : '#c8861a' }}"></span>
               @endif
             </div>
           @endfor

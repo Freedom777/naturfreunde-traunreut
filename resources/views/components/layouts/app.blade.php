@@ -28,9 +28,6 @@
     {{-- Footer --}}
     @include('components.footer')
 
-    {{-- Lightbox (shared across pages) --}}
-    @include('components.lightbox')
-
     @stack('scripts')
 </body>
 </html>

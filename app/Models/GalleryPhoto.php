@@ -9,13 +9,18 @@ use Illuminate\Support\Facades\Storage;
 class GalleryPhoto extends Model
 {
     protected $fillable = [
-        'gallery_location_id', 'path', 'caption',
-        'taken_at_date', 'featured', 'sort_order', 'published',
+        'gallery_location_id',
+        'city_id',
+        'path',
+        'caption',
+        'taken_at_date',
+        'sort_order',
+        'published',
     ];
 
     protected $casts = [
-        'featured'  => 'boolean',
-        'published' => 'boolean',
+        'taken_at_date' => 'date',
+        'published'     => 'boolean',
     ];
 
     public function location(): BelongsTo
@@ -23,15 +28,29 @@ class GalleryPhoto extends Model
         return $this->belongsTo(GalleryLocation::class, 'gallery_location_id');
     }
 
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
+    }
+
     public function getUrlAttribute(): string
     {
         return Storage::url($this->path);
     }
 
-    public function getThumbnailUrlAttribute(): string
+    /**
+     * Определить широкое ли фото по соотношению сторон
+     */
+    public function getIsWideAttribute(): bool
     {
-        // If using Spatie MediaLibrary or Intervention Image for thumbnails,
-        // swap this out. For now returns the same URL.
-        return Storage::url($this->path);
+        $fullPath = Storage::path($this->path);
+
+        if (!file_exists($fullPath)) {
+            return false;
+        }
+
+        [$width, $height] = getimagesize($fullPath);
+
+        return $height > 0 && ($width / $height) >= 1.5;
     }
 }

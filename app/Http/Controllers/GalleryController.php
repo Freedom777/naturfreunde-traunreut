@@ -9,11 +9,15 @@ class GalleryController extends Controller
 {
     public function index(): View
     {
-        $locations = GalleryLocation::where('active', true)
-            ->orderBy('sort_order')
-            ->with(['publishedPhotos'])
+        $galleryLocations = GalleryLocation::where('published', true)
+            ->with([
+                'publishedPhotos',
+                'city.state',
+                'coverPhoto',
+            ])
+            ->latest('date')
             ->get();
 
-        return view('pages.gallery', compact('locations'));
+        return view('pages.gallery', compact('galleryLocations'));
     }
 }
