@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -7,5 +6,28 @@
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --font-playfair: 'Playfair Display', serif;
+    --font-nunito: 'Nunito', sans-serif;
+
+    --color-green-deep:   #1e3a0f;
+    --color-green-mid:    #2f5c1a;
+    --color-green-accent: #4e8b2c;
+    --color-green-light:  #7ab648;
+    --color-cream:        #f4efe6;
+    --color-cream-dark:   #e8e0d0;
+    --color-gold:         #c8861a;
+    --color-gold-light:   #e8a832;
+}
+
+.gallery-item {
+    @apply relative rounded-xl overflow-hidden cursor-zoom-in;
+    aspect-ratio: 1;
+}
+
+.gallery-item img {
+    @apply w-full h-full object-cover transition-transform duration-400;
+    /* Браузер сам выберет нужный размер */
+    object-position: center;
 }

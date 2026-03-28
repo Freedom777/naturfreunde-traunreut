@@ -15,6 +15,24 @@ class CreateGalleryPhoto extends CreateRecord
         return $this->resolveCityFromUnbekannt($data);
     }
 
+    protected function afterCreate(): void
+    {
+        // Сбрасываем форму вручную после создания
+        $this->form->fill([
+            'gallery_location_id' => $this->data['gallery_location_id'], // оставляем альбом
+            'state_code'          => 'UN',
+            'city_id'             => null,
+            'path'                => null,
+            'caption'             => null,
+            'taken_at_date'       => null,
+            'new_city_name'       => null,
+            'date_from_exif'      => false,
+            'gps_found'           => false,
+            'sort_order'          => 0,
+            'published'           => true,
+        ]);
+    }
+
     private function resolveCityFromUnbekannt(array $data): array
     {
         if (($data['state_code'] ?? null) === 'UN' && !empty($data['new_city_name'])) {
@@ -31,5 +49,10 @@ class CreateGalleryPhoto extends CreateRecord
         unset($data['state_code'], $data['new_city_name'], $data['date_from_exif'], $data['gps_found']);
 
         return $data;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }
