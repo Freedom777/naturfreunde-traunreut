@@ -41,8 +41,7 @@
                 </div>
 
                 <div class="relative rounded-2xl overflow-hidden shadow-xl" style="aspect-ratio:4/3">
-                    <!-- https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=800&auto=format&fit=crop -->
-                    <img src="/storage/Heute.webp"
+                    <img src="/storage/huette/huette-alt.webp"
                          alt="Grundbachalm Hütte"
                          class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 right-0 px-6 py-4
@@ -64,8 +63,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
 
                 <div class="relative rounded-2xl overflow-hidden shadow-xl order-2 md:order-1" style="aspect-ratio:4/3">
-                    <!-- https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop -->
-                    <img src="/storage/Heute-2.webp"
+                    <img src="/storage/huette/huette-heute.webp"
                          alt="Bischofsfellnalm"
                          class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 right-0 px-6 py-4

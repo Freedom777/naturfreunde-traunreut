@@ -8,13 +8,32 @@
                 Seit 1895.
             </p>
             <div class="flex gap-2.5 mt-5">
-                @foreach(['📸' => '#', '👥' => '#', '✉️' => 'mailto:info@naturfreunde-traunreut.de'] as $icon => $href)
-                    <a href="{{ $href }}"
-                       class="w-10 h-10 rounded-xl bg-white/8 border border-white/12 flex items-center justify-center
-                    text-white/70 hover:bg-gold hover:text-white hover:border-gold transition-all duration-200">
-                        {{ $icon }}
-                    </a>
-                @endforeach
+                <a href="https://www.instagram.com/naturfreunde_traunreut/?utm_source=new_site" target="_blank" rel="noopener"
+                   class="w-10 h-10 rounded-xl bg-white/8 border border-white/12 flex items-center justify-center
+              text-white/70 hover:bg-gold hover:text-white hover:border-gold transition-all duration-200">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+                    </svg>
+                </a>
+
+                <a href="https://www.facebook.com/share/18ANyUMZ2Q?utm_source=new_site" target="_blank" rel="noopener"
+                   class="w-10 h-10 rounded-xl bg-white/8 border border-white/12 flex items-center justify-center
+              text-white/70 hover:bg-gold hover:text-white hover:border-gold transition-all duration-200">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                    </svg>
+                </a>
+
+                <a href="mailto:info@naturfreunde-traunreut.de"
+                   class="w-10 h-10 rounded-xl bg-white/8 border border-white/12 flex items-center justify-center
+              text-white/70 hover:bg-gold hover:text-white hover:border-gold transition-all duration-200">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </a>
             </div>
         </div>
 
