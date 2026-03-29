@@ -44,7 +44,7 @@
                             hover:-translate-y-1 hover:shadow-lg transition-all duration-250">
 
                                     {{-- Photo --}}
-                                    <div class="relative h-56 bg-cream-dark overflow-hidden">
+                                    <div class="relative h-72 bg-cream-dark overflow-hidden">
                                         @if($member->photo_url)
                                             <img src="{{ $member->photo_url }}"
                                                  alt="{{ $member->name }}"
