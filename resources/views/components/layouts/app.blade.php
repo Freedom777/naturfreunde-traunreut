@@ -30,6 +30,14 @@
     {{-- Footer --}}
     @include('components.footer')
 
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('kontakt')?.scrollIntoView({ behavior: 'smooth' });
+            });
+        </script>
+    @endif
+
     @stack('scripts')
 </body>
 </html>

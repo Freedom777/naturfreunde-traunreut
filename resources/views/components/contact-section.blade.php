@@ -1,13 +1,13 @@
 @props(['success' => false])
 
-<section class="py-24 px-10 bg-white" id="kontakt">
+<section class="py-16 md:py-24 px-6 md:px-10 bg-white" id="kontakt">
   <div class="max-w-6xl mx-auto">
 
     <div class="section-label">📬 Kontakt</div>
     <h2 class="section-title">Nehmen Sie <em>Kontakt</em> auf</h2>
     <p class="section-lead">Wir beantworten gerne Ihre Fragen zu unserem Verein.</p>
 
-    <div class="grid grid-cols-2 gap-16 mt-14 items-start">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mt-14 items-start">
 
       {{-- Contact info --}}
       <div class="flex flex-col gap-5">

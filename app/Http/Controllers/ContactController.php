@@ -22,6 +22,8 @@ class ContactController extends Controller
         // Optionally send notification email to admin
         // Mail::to(config('naturfreunde.contact_email'))->send(new ContactReceived($data));
 
-        return back()->with('success', 'Vielen Dank! Ihre Nachricht wurde gesendet.');
+        return redirect()
+            ->to(route('home') . '#kontakt')
+            ->with('success', 'Vielen Dank! Ihre Nachricht wurde gesendet.');
     }
 }

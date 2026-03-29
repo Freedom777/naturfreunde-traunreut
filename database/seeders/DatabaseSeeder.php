@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             StateSeeder::class,
             CitySeeder::class,
+            TeamMemberSeeder::class,
+            MemberSeeder::class,
         ]);
 
         // ── Sample Events ────────────────────────────────────

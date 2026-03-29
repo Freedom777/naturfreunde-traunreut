@@ -31,3 +31,16 @@
     /* Браузер сам выберет нужный размер */
     object-position: center;
 }
+
+.btn-primary {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gold text-white
+    font-semibold text-base hover:bg-gold-light hover:-translate-y-0.5
+    transition-all duration-250 shadow-lg no-underline whitespace-nowrap;
+}
+
+.btn-outline {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white
+    font-semibold text-base border-2 border-white/40 bg-white/10
+    hover:bg-white/20 hover:-translate-y-0.5 transition-all duration-250
+    no-underline whitespace-nowrap;
+}

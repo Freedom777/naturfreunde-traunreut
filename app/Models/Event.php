@@ -71,25 +71,25 @@ class Event extends Model
      */
     public function getGoogleCalendarUrlAttribute(): string
     {
-        $start = $this->all_day
-            ? $this->starts_at->format('Ymd')
-            : $this->starts_at->utc()->format('Ymd\THis\Z');
-
-        $end = $this->ends_at
-            ? ($this->all_day
-                ? $this->ends_at->format('Ymd')
-                : $this->ends_at->utc()->format('Ymd\THis\Z'))
-            : ($this->all_day
-                ? $this->starts_at->addDay()->format('Ymd')
-                : $this->starts_at->addHours(2)->utc()->format('Ymd\THis\Z'));
+        if ($this->all_day) {
+            $start = $this->starts_at->format('Ymd');
+            $end   = $this->ends_at
+                ? $this->ends_at->addDay()->format('Ymd')
+                : $this->starts_at->addDay()->format('Ymd');
+        } else {
+            $start = $this->starts_at->format('Ymd\THis');
+            $end   = $this->ends_at
+                ? $this->ends_at->format('Ymd\THis')
+                : $this->starts_at->addHours(2)->format('Ymd\THis');
+        }
 
         return 'https://calendar.google.com/calendar/render?' . http_build_query(array_filter([
-            'action'   => 'TEMPLATE',
-            'text'     => $this->title . ' – NaturFreunde Traunreut',
-            'dates'    => $start . '/' . $end,
-            'details'  => $this->description,
-            'location' => $this->location,
-        ]));
+                'action'   => 'TEMPLATE',
+                'text'     => $this->title . ' – NaturFreunde Traunreut',
+                'dates'    => $start . '/' . $end,
+                'details'  => $this->description,
+                'location' => $this->location,
+            ]));
     }
 
     /**

@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\LatestMessagesWidget;
+use App\Filament\Widgets\StatsOverview;
+use App\Filament\Widgets\UpcomingEventsWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -38,7 +41,10 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\FilamentInfoWidget::class,
+                StatsOverview::class,
+                UpcomingEventsWidget::class,
+                LatestMessagesWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

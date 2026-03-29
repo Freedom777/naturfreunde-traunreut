@@ -1,13 +1,14 @@
 @props(['calendarEvents', 'now'])
 
-<section class="py-24 px-10 bg-white" id="kalender">
+<section class="py-16 md:py-24 px-6 md:px-10 bg-white" id="kalender">
   <div class="max-w-6xl mx-auto">
 
     <div class="section-label">📆 Terminplan</div>
     <h2 class="section-title">Veranstaltungs<em>kalender</em></h2>
     <p class="section-lead">Alle Termine auf einen Blick. Klicken Sie auf 📅 um einen Termin in Google Kalender zu speichern.</p>
 
-    <div class="mt-14 bg-cream rounded-2xl overflow-hidden shadow-md grid grid-cols-[1fr_320px]">
+      <div class="mt-14 bg-cream rounded-2xl overflow-hidden shadow-md
+            grid grid-cols-1 md:grid-cols-[1fr_320px]">
 
       {{-- ── Left: Calendar grid ── --}}
       <div>
