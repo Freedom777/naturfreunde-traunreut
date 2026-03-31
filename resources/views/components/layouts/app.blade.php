@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ $description ?? 'NaturFreunde Traunreut e.V. – Wandern, Umwelt, Gemeinschaft seit 1895.' }}">
+    <meta name="robots" content="noindex, nofollow">
     <title>{{ isset($title) ? $title . ' – ' : '' }}NaturFreunde Traunreut e.V.</title>
 
     {{-- Fonts --}}
