@@ -6,5 +6,5 @@ use Filament\Resources\Pages\ListRecords;
 class ListGalleryLocations extends ListRecords {
     protected static string $resource = GalleryLocationResource::class;
     protected function getHeaderActions(): array { return [CreateAction::make()]; }
-    protected static ?string $navigationGroup = 'Galerie';
+    protected static string|\UnitEnum|null $navigationGroup = 'Galerie';
 }

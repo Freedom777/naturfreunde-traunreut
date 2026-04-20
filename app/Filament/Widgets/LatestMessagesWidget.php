@@ -3,7 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\ContactMessage;
-use Filament\Tables\Actions\Action;
+use Filament\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -11,7 +11,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestMessagesWidget extends BaseWidget
 {
-    protected static ?string $pollingInterval = null;
+    protected ?string $pollingInterval = null;
 
     protected static ?int $sort = 3;
     protected static ?string $heading = 'Letzte Nachrichten';

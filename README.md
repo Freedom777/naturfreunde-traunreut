@@ -1,53 +1,75 @@
 # NaturFreunde Traunreut — Laravel Website
 
-## Stack
-- **Laravel 12** + PHP 8.3+
-- **Filament 3** — Admin-Panel
-- **Tailwind CSS 4** — Styling
-- **Alpine.js 3** — Galerie-Tabs, Lightbox
-- **MySQL 8**
+Website der Ortsgruppe Traunreut e.V. — modernes Redesign von naturfreunde-traunreut.de.
 
 ---
 
-## Installation
+## Stack
+
+| Компонент | Версия |
+|---|---|
+| Laravel | 13 |
+| PHP | 8.3+ (Production: 8.5) |
+| Filament | 5 (Admin-Panel) |
+| Livewire | 4 |
+| Tailwind CSS | 4 |
+| Alpine.js | 3 |
+| Intervention Image | 4 (WebP-Konvertierung) |
+| MySQL | 8 |
+
+---
+
+## Lokale Entwicklung (Laragon / Windows)
 
 ```bash
-# 1. Neues Laravel-Projekt erstellen
-composer create-project laravel/laravel naturfreunde-traunreut
-cd naturfreunde-traunreut
-
-# 2. Filament installieren
-composer require filament/filament:"^3.0"
-php artisan filament:install --panels
-
-# 3. Alpine.js (via CDN oder npm)
-npm install alpinejs
-# oder im layout.blade.php:
-# <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-# 4. Dateien aus diesem Paket einkopieren
-# Alle Dateien aus den jeweiligen Unterordnern in das Projekt kopieren.
-
-# 5. .env konfigurieren
+# 1. .env konfigurieren
 cp .env.example .env
 php artisan key:generate
-# DB_DATABASE, DB_USERNAME, DB_PASSWORD setzen
+# DB_DATABASE, DB_USERNAME, DB_PASSWORD, APP_URL setzen
 
-# 6. Migrationen + Seed
+# 2. Abhängigkeiten installieren
+composer install
+npm install
+
+# 3. Migrationen + Seed
 php artisan migrate --seed
 
-# 7. Storage-Link für Fotos
+# 4. Storage-Link
 php artisan storage:link
 
-# 8. Filament Admin-User anlegen
-php artisan make:filament-user
+# 5. Filament Admin-User anlegen
+php artisan tinker
+# >>> App\Models\User::create([...])
 
-# 9. Assets builden
-npm install && npm run build
-
-# 10. Dev-Server starten
-php artisan serve
+# 6. Assets bauen
+npm run build
+# oder für Entwicklung:
+npm run dev
 ```
+
+### Wichtige .env-Werte
+
+```
+APP_URL=http://nf.test
+APP_TIMEZONE=Europe/Berlin
+FILESYSTEM_DISK=public
+JUBILEE_YEARS=10,25,30,40,50,75
+```
+
+---
+
+## Admin-Panel
+
+Erreichbar unter: `/admin`
+
+| Ressource | Funktion |
+|---|---|
+| Veranstaltungen | CRUD mit Datum, Kategorie, Ort |
+| Wanderungen | Albumverwaltung (GalleryLocation) |
+| Fotos | Upload mit EXIF-Extraktion + GPS-Geocoding |
+| Team | Mitglieder mit Foto-Upload (WebP) |
+| Jubilare | Mitglieder-Jubiläen nach Eintrittsjahr |
+| Nachrichten | Eingehende Kontaktformular-Nachrichten |
 
 ---
 
@@ -55,76 +77,70 @@ php artisan serve
 
 ```
 app/
+├── Console/Commands/
+│   └── ImportTeamPhotos.php     ← php artisan team:import-photos
 ├── Http/Controllers/
-│   ├── HomeController.php       ← Startseite (Events + Galerie + Kalender)
-│   ├── GalleryController.php    ← Vollständige Galerie-Seite
-│   └── ContactController.php    ← Kontaktformular POST
-│
+│   ├── HomeController.php
+│   ├── GalleryController.php
+│   ├── ContactController.php
+│   ├── TeamController.php
+│   └── JubileeController.php
+├── Livewire/
+│   └── CalendarSection.php      ← interaktiver Monatskalender
 ├── Models/
-│   ├── Event.php                ← google_calendar_url accessor
-│   ├── GalleryLocation.php      ← Ort (Kampenwand, Seeon, …)
-│   ├── GalleryPhoto.php         ← Foto mit FK auf GalleryLocation
-│   └── ContactMessage.php       ← Eingehende Nachrichten
-│
-└── Filament/Resources/
-    ├── EventResource.php        ← CRUD Veranstaltungen
-    └── GalleryPhotoResource.php ← Upload + Verwaltung Fotos
+│   ├── Event.php
+│   ├── GalleryLocation.php
+│   ├── GalleryPhoto.php
+│   ├── State.php / City.php      ← Bundesländer + Städte DE
+│   ├── GeocodeCache.php         ← Nominatim-Cache
+│   ├── TeamMember.php
+│   ├── Member.php               ← Jubilare
+│   └── ContactMessage.php
+├── Services/
+│   ├── ExifExtractorService.php  ← GPS + Datum aus EXIF
+│   └── GeocoderService.php       ← Nominatim Reverse Geocoding
+└── Filament/
+    ├── Resources/               ← 6 Ressourcen
+    └── Widgets/                 ← StatsOverview, UpcomingEvents, LatestMessages
 
-database/migrations/
-├── create_events_table.php
-├── create_gallery_locations_table.php
-├── create_gallery_photos_table.php
-└── create_contact_messages_table.php
+resources/
+├── css/app.css               ← Tailwind v4 @theme
+├── js/app.js                 ← Alpine.js (startet nur ohne Livewire)
+└── views/
+    ├── components/layouts/      ← Haupt-Layout
+    ├── components/              ← navbar, footer, event-card, gallery-section, contact-section
+    ├── livewire/                ← calendar-section.blade.php
+    └── pages/                   ← home, gallery, team, jubilee + 5 Statik-Seiten
 
-resources/views/
-├── layouts/app.blade.php        ← Haupt-Layout
-├── components/
-│   ├── navbar.blade.php
-│   ├── footer.blade.php
-│   ├── event-card.blade.php     ← Mit Google Calendar Button
-│   ├── gallery-section.blade.php ← Tabs + Lightbox (Alpine.js)
-│   ├── calendar-section.blade.php ← Monatskalender + Sidebar
-│   ├── contact-section.blade.php  ← Formular + Validierung
-│   └── lightbox.blade.php
-└── pages/
-    └── home.blade.php
+docs/
+├── OVERVIEW.md              ← Stack, Struktur, Konfiguration
+├── DATABASE.md              ← Tabellen-Schema
+├── FRONTEND.md              ← Blade-Komponenten, Alpine.js
+├── ADMIN_AND_SERVICES.md    ← Filament, Services, Artisan-Befehle
+└── BUGS_AND_TODO.md         ← Bekannte Bugs + TODO-Liste
 ```
 
 ---
 
 ## Google Calendar Integration
 
-Keine OAuth-Authentifizierung nötig. Das `Event`-Model generiert automatisch
-eine URL nach dem Schema:
+Kein API-Key, kein OAuth. Das `Event`-Model generiert eine direkte URL:
 
 ```
 https://calendar.google.com/calendar/render?action=TEMPLATE
-  &text=Titel+–+NaturFreunde+Traunreut
-  &dates=20260308T100000Z/20260308T140000Z
+  &text=Titel
+  &dates=20260308T110000/20260308T150000
   &details=Beschreibung
   &location=Ort
 ```
 
-Ein Klick öffnet Google Kalender im Browser — der Nutzer muss nur bestätigen.
-Kein API-Key, kein OAuth erforderlich.
-
----
-
-## Admin-Panel (Filament)
-
-Erreichbar unter: `/admin`
-
-| Ressource          | Funktion                                     |
-|--------------------|----------------------------------------------|
-| Veranstaltungen    | CRUD mit Datum, Kategorie, Ort               |
-| Galerie-Fotos      | Upload + Lokation + Featured-Flag + Sortierung |
-| Kontaktnachrichten | Eingehende Formularnachrichten lesen         |
+Zeit ohne `Z`-Suffix — Google interpretiert es als Lokalzeit (`APP_TIMEZONE=Europe/Berlin`).
 
 ---
 
 ## Erweiterungsideen
 
-- **Spatie MediaLibrary** für automatische Thumbnail-Generierung
-- **Livewire-Kalender** mit Monatswechsel ohne Seitenreload
-- **ICS-Export** (`.ics`-Datei) als Alternative zu Google Calendar
-- **Spatie Translatable** falls DE/EN Zweisprachigkeit gewünscht
+- **Spatie MediaLibrary** — automatische Thumbnail-Generierung beim Upload
+- **ICS-Export** — `.ics`-Datei als Alternative zu Google Calendar
+- **E-Mail-Benachrichtigung** — bei neuen Kontaktformular-Nachrichten (SMTP konfigurieren)
+- **Spatie Translatable** — falls DE/EN Zweisprachigkeit gewünscht

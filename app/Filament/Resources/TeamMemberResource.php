@@ -9,11 +9,11 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -23,13 +23,13 @@ use Filament\Tables\Table;
 class TeamMemberResource extends Resource
 {
     protected static ?string $model = TeamMember::class;
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
     protected static ?string $navigationLabel = 'Team';
     protected static ?string $modelLabel = 'Mitglied';
     protected static ?string $pluralModelLabel = 'Team';
     protected static ?int $navigationSort = 4;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form->schema([
 
@@ -62,6 +62,8 @@ class TeamMemberResource extends Resource
             FileUpload::make('photo')
                 ->label('Foto')
                 ->image()
+                ->disk('public')
+                ->visibility('public')
                 ->directory('team')
                 ->imageEditor()
                 ->maxSize(4096)
@@ -101,6 +103,7 @@ class TeamMemberResource extends Resource
             ->columns([
                 ImageColumn::make('photo')
                     ->label('')
+                    ->disk('public')
                     ->circular()
                     ->size(40)
                     ->defaultImageUrl(fn (TeamMember $r) => 'https://ui-avatars.com/api/?name='.urlencode($r->name).'&background=2f5c1a&color=fff'),

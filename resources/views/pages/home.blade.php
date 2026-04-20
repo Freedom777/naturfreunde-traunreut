@@ -220,7 +220,7 @@
                         </li>
                     @endforeach
                 </ul>
-                <a href="{{ Storage::url('Beitrittserklärung.pdf') }}" class="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-gold text-white
+                <a href="{{ Storage::url('Beitrittserklärung.pdf') }}" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-gold text-white
                            font-semibold text-sm hover:bg-gold-light hover:-translate-y-0.5 transition-all duration-200">
                     📄 Beitrittsformular herunterladen
                 </a>

@@ -68,7 +68,7 @@
                 </div>
 
                 {{-- ── РЕЖИМ: открытый альбом ── --}}
-                <div x-show="mode === 'album'" x-transition>
+                <div x-show="mode === 'album'" x-transition style="display:none">
 
                     {{-- Назад --}}
                     <button @click="closeAlbum()"
@@ -200,13 +200,10 @@
                 activeAlbumId: null,
 
                 init() {
-                    // Читаем хэш при загрузке страницы
-                    const hash = window.location.hash; // '#album-1'
+                    const hash = window.location.hash;
                     if (hash && hash.startsWith('#album-')) {
                         const id = parseInt(hash.replace('#album-', ''));
-                        if (id) {
-                            this.openAlbum(id);
-                        }
+                        if (id) this.openAlbum(id);
                     }
                 },
 
@@ -222,7 +219,6 @@
                 closeAlbum() {
                     this.mode = 'albums';
                     this.activeAlbumId = null;
-                    // Убираем хэш из URL
                     history.pushState(null, '', window.location.pathname);
                 },
 
@@ -230,7 +226,6 @@
                     const images = Array.from(
                         document.querySelectorAll('.gallery-grid .gallery-item img')
                     ).map(img => ({ src: img.src, caption: img.alt }));
-
                     this.$dispatch('lightbox-open', { src, caption, images, index });
                 },
             };

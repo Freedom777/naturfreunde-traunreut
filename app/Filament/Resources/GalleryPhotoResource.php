@@ -10,17 +10,16 @@ use App\Services\ExifExtractorService;
 use App\Services\GeocoderService;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -31,13 +30,13 @@ use Illuminate\Support\Facades\Storage;
 class GalleryPhotoResource extends Resource
 {
     protected static ?string $model = GalleryPhoto::class;
-    protected static ?string $navigationIcon = 'heroicon-o-photo';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-photo';
     protected static ?string $navigationLabel = 'Fotos';
     protected static ?string $modelLabel = 'Foto';
     protected static ?string $pluralModelLabel = 'Fotos';
     protected static ?int $navigationSort = 3;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form->schema([
 
@@ -54,6 +53,8 @@ class GalleryPhotoResource extends Resource
             FileUpload::make('path')
                 ->label('Foto')
                 ->image()
+                ->disk('public')
+                ->visibility('public')
                 ->directory('gallery')
                 ->imageEditor()
                 ->maxSize(12288) // 12 MB
@@ -178,6 +179,7 @@ class GalleryPhotoResource extends Resource
             ->columns([
                 ImageColumn::make('path')
                     ->label('Vorschau')
+                    ->disk('public')
                     ->square()
                     ->size(60),
 
