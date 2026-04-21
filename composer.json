@@ -51,6 +51,7 @@
             "@php artisan test"
         ],
         "post-install-cmd": [
+            "@php /opt/php-preload/symlink-shared-vendor.php",
             "@composer dump-autoload --optimize --no-dev"
         ],
         "post-autoload-dump": [
@@ -59,6 +60,7 @@
             "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
+            "@php /opt/php-preload/symlink-shared-vendor.php",
             "@composer dump-autoload --optimize --no-dev",
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
